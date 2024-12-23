@@ -1,0 +1,13 @@
+*.MDF
+*.LDF
+
+local/mssql/data/*
+local/mssql/log/*
+
+dev/mssql/data/*
+dev/mssql/log/*
+
+dev/shared/*
+local/shared/*
+
+mssql-setup.log
