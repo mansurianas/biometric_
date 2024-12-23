@@ -5,7 +5,7 @@ services:
     image: nginx:1.25
     container_name: nginx_proxy
     ports:
-      - "${NGINX_FASTAPI_PORT}:5000"
+      - "${NGINX_FASTAPI_PORT}:80"
     volumes:
       - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
     depends_on:
@@ -24,9 +24,9 @@ services:
     ports:
       - "${DB_PORT_EXTERNAL}:1433"
     volumes:
-      - ${PWD}/mssql/data:/var/opt/mssql/data
-      - ${PWD}/mssql/log:/var/opt/mssql/log
-      - ${PWD}/mssql/scripts:/scripts
+      - ./mssql/data:/var/opt/mssql/data
+      - ./mssql/log:/var/opt/mssql/log
+      - ./mssql/scripts:/scripts
     labels:
       logging: promtail
       logging_job_name: mssql
@@ -49,7 +49,8 @@ services:
       logging_job_name: fastapi
 
   react:
-    image: react
+    build:
+      context: ./react
     container_name: react_server
     ports:
       - "${REACT_PORT}:6000"
@@ -144,3 +145,7 @@ services:
       - ./shared/loki:/loki
     depends_on:
       - promtail
+
+networks:
+  default:
+    driver: bridge
