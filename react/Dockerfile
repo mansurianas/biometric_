@@ -16,6 +16,6 @@ COPY --from=build /react/build/ /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port 6000
-EXPOSE 6000
+EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]
